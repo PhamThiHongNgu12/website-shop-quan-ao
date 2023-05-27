@@ -1,0 +1,48 @@
+.form-signin input[type="email"],
+.form-signin input[type="password"],
+.form-signin input[type="text"],
+.form-signin button {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  display: block;
+  height: 55px;
+  position: relative;
+  width: 100%;
+  z-index: 1;
+}
+
+.form-signin .form-control:focus {
+  border-color: rgb(104, 145, 162);
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
+    0 0 8px rgb(104, 145, 162);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgb(104, 145, 162);
+  outline: 0;
+}
+
+.login-container {
+  height: 100vh;
+  margin: auto 0 auto auto;
+  padding: auto;
+  width: 100%;
+}
+/* //huy.quang: disable default eye icon on ie < 10 */
+input::-ms-reveal,
+input::-ms-clear {
+  display: none;
+}
+.login-container {
+  padding: 100px 0 0 0;
+}
+.form_login {
+  background: colormain;
+  border: none;
+  border-radius: 8px;
+  -webkit-border-radius: 8px;
+  height: 475px;
+  margin: 50px auto 0;
+  max-width: 470px;
+  padding: 20px 50px;
+  padding: 20px 50px;
+}
+
