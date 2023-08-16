@@ -6,6 +6,7 @@ import { logout } from "../../store/reducers/member";
 import memberService from "../../services/memberService";
 import { useCart } from "react-use-cart";
 import { Link } from "react-router-dom";
+import "./style.css";
 
 const Header = (props) => {
   const dispatch = useDispatch();
@@ -47,12 +48,12 @@ const Header = (props) => {
         <div className="top_nav">
           <div className="container">
             <div className="row">
-              <div className="col-md-6">
+              <div className="col-md-7">
                 <div className="top_nav_left">
                   free shipping on all u.s orders over $50
                 </div>
               </div>
-              <div className="col-md-6 text-right">
+              <div className="col-md-3 text-right">
                 <div className="top_nav_right">
                   <ul className="top_nav_menu">
                     {/* Currency / Language / My Account */}
@@ -122,7 +123,7 @@ const Header = (props) => {
                   <ul className="navbar_user ">
                     <li>
                       <input type="text" className="mr-1" />
-                      <i className="fa fa-search" aria-hidden="true" />
+                      <i className="fa fa-search " aria-hidden="true" />
                     </li>
                     <li className="checkout ">
                       <a href="/cart">
@@ -141,14 +142,14 @@ const Header = (props) => {
 
                       <ul className="account_selection col text-center">
                         <li>
-                          <a href="/register" className=" row ">
+                          <a href="/logins" className=" row ">
                             <i className="fa fa-sign-in" />
                             SignIn
                           </a>
                         </li>
                         <li>
                           <a
-                            href="/register"
+                            href="/logins"
                             className="row"
                             // {members.map((aMember) => (e))}
 

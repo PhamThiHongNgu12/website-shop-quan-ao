@@ -46,3 +46,7 @@ input::-ms-clear {
   padding: 20px 50px;
 }
 
+.btn-login {
+  display: flex;
+  justify-content: center;
+}

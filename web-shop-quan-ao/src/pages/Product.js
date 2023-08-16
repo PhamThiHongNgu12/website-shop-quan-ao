@@ -16,7 +16,7 @@ const Product = (props) => {
   // const { addItem } = useCart();
 
   const [page, setPage] = useState(0);
-  const [pageLength, setPageLength] = useState(5);
+  const [pageLength, setPageLength] = useState(10);
   const [pagingItems, setPagingItems] = useState([]);
   const [search, setSearch] = useState("");
 

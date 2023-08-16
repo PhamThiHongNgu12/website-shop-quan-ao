@@ -11,7 +11,7 @@ const DefaultLayout = () => {
   return (
     <>
       {!isLoggedIns ? (
-        <Navigate to="/register" />
+        <Navigate to="/logins" />
       ) : (
         <>
           <Header />

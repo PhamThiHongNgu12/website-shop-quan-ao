@@ -10,7 +10,8 @@ import { Modal, Button } from "react-bootstrap";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import memberService from "./../../services/memberService";
+import memberService from "../../services/memberService";
+import "./Login.css";
 
 const LoginUser = (props) => {
   const dispatch = useDispatch();
@@ -154,9 +155,9 @@ const LoginUser = (props) => {
                           />
                         </div>
                         <p className="text-center text-danger">{message}</p>
-                        <div className="pt-1 mb-4">
+                        <div className="btn-login">
                           <CustomButton
-                            className="btn btn-dark btn-lg btn-block"
+                            className="btn btn-dark btn-lg btn-block text-center"
                             type="submit"
                             disabled={isWaiting}
                             isLoading={isWaiting}

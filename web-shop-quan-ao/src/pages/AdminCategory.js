@@ -110,15 +110,18 @@ const AdminCategory = (props) => {
                             <tbody>
                               {categories.map((aCategory, idx) => (
                                 <tr key={aCategory.CategoryID}>
-                                  <td>{idx + 1}</td>
+                                  <td className="text-center">{idx + 1}</td>
                                   <td>{aCategory.CategoryName}</td>
-                                  <td className="text-center align-middle">
+                                  <td className="text-center align-middle ">
                                     <div className="btn-group align-top">
                                       <button
                                         className="btn btn-sm btn-outline-secondary badge"
                                         type="button"
                                         data-toggle="modal"
                                         data-target="#user-form-modal"
+                                        style={{
+                                          color: "black",
+                                        }}
                                         onClick={(e) =>
                                           showModalHandler(
                                             e,
@@ -143,50 +146,6 @@ const AdminCategory = (props) => {
                               ))}
                             </tbody>
                           </table>
-                        </div>
-                        <div className="d-flex justify-content-center">
-                          <ul className="pagination mt-3 mb-0">
-                            <li className="disabled page-item">
-                              <a href="/#" className="page-link">
-                                ‹
-                              </a>
-                            </li>
-                            <li className="active page-item">
-                              <a href="/#" className="page-link">
-                                1
-                              </a>
-                            </li>
-                            <li className="page-item">
-                              <a href="/#" className="page-link">
-                                2
-                              </a>
-                            </li>
-                            <li className="page-item">
-                              <a href="/#" className="page-link">
-                                3
-                              </a>
-                            </li>
-                            <li className="page-item">
-                              <a href="/#" className="page-link">
-                                4
-                              </a>
-                            </li>
-                            <li className="page-item">
-                              <a href="/#" className="page-link">
-                                5
-                              </a>
-                            </li>
-                            <li className="page-item">
-                              <a href="/#" className="page-link">
-                                ›
-                              </a>
-                            </li>
-                            <li className="page-item">
-                              <a href="/#" className="page-link">
-                                »
-                              </a>
-                            </li>
-                          </ul>
                         </div>
                       </div>
                     </div>

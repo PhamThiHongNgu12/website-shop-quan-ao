@@ -275,6 +275,9 @@ const AdminCRUDProduct = (props) => {
                                       onClick={(e) =>
                                         showModalHandler(e, aProduct.ProductID)
                                       }
+                                      style={{
+                                        color: "black",
+                                      }}
                                     >
                                       Edit
                                     </button>

@@ -6,7 +6,7 @@ const url = {
   baseUrl: "http://localhost/clotheshop/public/api",
   members: "/members/login",
   memberprofile: "/members/profile",
-  register: "/members/register",
+  register: "/members/logins",
 };
 
 const instance = axios.create({
@@ -20,7 +20,7 @@ const instance = axios.create({
 instance.interceptors.request.use((request) => {
   const state = store.getState(); //grab curent state
 
-  if (state.userauth.token) {
+  if (state.userauth.membertoken) {
     request.headers.Authorization = `Bearer ${state.userauth.membertoken}`;
   }
   store.dispatch(showLoading());
@@ -39,7 +39,7 @@ instance.interceptors.response.use(
     } else {
       switch (error.response.status) {
         case 401:
-          window.location.href = "/register";
+          window.location.href = "/logins";
           break;
         case 403:
           window.location.href = "/no-permission";
