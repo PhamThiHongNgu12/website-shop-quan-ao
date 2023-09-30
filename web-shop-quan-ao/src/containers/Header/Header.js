@@ -7,6 +7,7 @@ import memberService from "../../services/memberService";
 import { useCart } from "react-use-cart";
 import { Link } from "react-router-dom";
 import "./style.css";
+import cartService from "../../services/cartService";
 
 const Header = (props) => {
   const dispatch = useDispatch();
@@ -18,29 +19,44 @@ const Header = (props) => {
   const handleModalClose = () => setShowModal(false);
   const handleModalShow = () => setShowModal(true);
 
-  const { totalUniqueItems } = useCart();
+  const [cart, setCart] = useState([]);
+  const item = cart.length;
+  // const showModalHandler = (e, MemberID) => {
+  //   if (e) e.preventDefault();
 
-  const showModalHandler = (e, id) => {
+  //   if (MemberID > 0) {
+  //     memberService.profile(MemberID).then((res) => setMemberprofile(res.data));
+  //     handleModalShow();
+  //   } else {
+  //     handleModalShow();
+  //   }
+  // };
+  console.log("lol", cart);
+  useEffect(() => {
+    load();
+  }, [item, userInfo.MemberID]);
+  const load = () => {
+    cartService.getCart(userInfo.MemberID).then((res) => setCart(res.data));
+  };
+  const showModalHandler = (e, MemberID) => {
     if (e) e.preventDefault();
 
-    if (id > 0) {
-      memberService.profile(id).then((res) => {
-        handleModalShow();
-      });
+    if (MemberID > 0) {
+      memberService.profile().then((res) => setMemberprofile(res.data));
+
+      handleModalShow();
     } else {
       handleModalShow();
     }
   };
 
-  useEffect(() => {
-    if (isLoggedIns) {
-      loadData();
-    }
-  }, []);
+  // useEffect(() => {
+  //   loadData();
+  // }, []);
 
-  const loadData = () => {
-    memberService.profile().then((res) => setMemberprofile(res.data));
-  };
+  // const loadData = () => {
+  //   memberService.profile().then((res) => setMemberprofile(res.data));
+  // };
   return (
     <>
       <header className="header trans_300">
@@ -129,7 +145,7 @@ const Header = (props) => {
                       <a href="/cart">
                         <i className="fa fa-shopping-cart" aria-hidden="true" />
                         <span id="checkout_items" className="checkout_items">
-                          1
+                          {item}
                         </span>
                       </a>
                     </li>
@@ -154,7 +170,7 @@ const Header = (props) => {
                             // {members.map((aMember) => (e))}
 
                             onClick={(e) =>
-                              showModalHandler(e, memberprofile.id)
+                              showModalHandler(e, userInfo.MemberID)
                             }
                           >
                             <i className="fa fa-user-plus" />

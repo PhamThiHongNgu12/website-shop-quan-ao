@@ -5,7 +5,9 @@ import productService from "../services/productService";
 import Header from "../containers/Header/Header";
 import { useCart } from "react-use-cart";
 import { Button, Pagination } from "react-bootstrap";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import memberService from "../services/memberService";
+import cartService from "../services/cartService";
 // import { NavLink } from "react-bootstrap";
 // import { useCart } from "react-use-cart";
 // import { useSelector } from "react-redux";
@@ -23,38 +25,27 @@ const Product = (props) => {
   const [show, setShow] = useState(true);
   const [cart, setCart] = useState([]);
   const [warning, setWarning] = useState(false);
-
+  const [quantity, setQuantity] = useState(1);
+  const navigate = useNavigate();
   const { cateid } = useParams();
-
-  // const handleClick = (lisItems) => {
-  //   let isPresent = false;
-  //   productService.list().then((res) => {
-  //     const listItems = res.data.map((x) => {
-  //       return { id: x.ProductID, name: x.ProductName };
-  //     });
-  //   });
-  //   isPresent = true;
-  //   if (isPresent) {
-  //     setWarning(true);
-  //     setTimeout(() => {
-  //       setWarning(false);
-  //     }, 2000);
-  //     return;
-  //   }
-  //   setCart([...cart, lisItems]);
-  // };
-  // const handleChange = (item, d) => {
-  //   let ind = -1;
-  //   cart.forEach((products, index) => {
-  //     if (products.id === item.id) ind = index;
-  //   });
-  //   const tempArr = cart;
-  //   tempArr[ind].amount += d;
-
-  //   if (tempArr[ind].amount === 0) tempArr[ind].amount = 1;
-  //   setCart([...tempArr]);
-  // };
-
+  const [member, setMember] = useState([]);
+  console.log(member.id);
+  const handleClickAddToCart = (id) => {
+    console.log(member);
+    const data = JSON.stringify({
+      ProductID: id,
+      MemberID: member.id,
+      Product_qty: 1,
+    });
+    cartService.addCart(data);
+    navigate("/cart");
+  };
+  useEffect(() => {
+    loadUser();
+  }, []);
+  const loadUser = () => {
+    memberService.profile().then((res) => setMember(res.data));
+  };
   useEffect(() => {
     loadDataProduct();
   }, [cateid, page, search]);
@@ -333,10 +324,7 @@ const Product = (props) => {
 
                 {/* <!-- Product Grid --> */}
 
-                <div
-                  className="product-grid w-100 justify-content-center"
-                  href="/product-detail"
-                >
+                <div className="product-grid w-100 justify-content-center">
                   {/* <!-- Product 1 --> */}
                   {products.map((aProduct, idx) => (
                     <div
@@ -346,7 +334,15 @@ const Product = (props) => {
                       <p hidden>{page * pageLength + idx + 1}</p>
                       <div className="product discount ">
                         <div className="product_image">
-                          <img src={aProduct.Image} alt="" />
+                          <img
+                            src={aProduct.Image}
+                            alt=""
+                            onClick={() => {
+                              navigate(`/product-detail/
+                              ${aProduct.ProductID}`);
+                              console.log("ki", aProduct.ProductID);
+                            }}
+                          />
                         </div>
                         <div className="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center">
                           <span>{aProduct.Size}</span>
@@ -362,7 +358,7 @@ const Product = (props) => {
                       </div>
                       <Button
                         className="red_button add_to_cart_button"
-                        // onClick={() => handleClick()}
+                        onClick={() => handleClickAddToCart(aProduct.ProductID)}
                       >
                         add to cart
                       </Button>

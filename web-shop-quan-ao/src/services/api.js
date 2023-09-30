@@ -3,7 +3,7 @@ import store from "../store";
 import { hideLoading, showLoading } from "react-redux-loading-bar";
 
 const url = {
-  baseUrl: "http://localhost/clotheshop/public/api",
+  baseURL: "http://localhost/clotheshop/public/api",
   login: "/login",
   categories: "/categories",
   products: "/products",
@@ -13,7 +13,7 @@ const url = {
 };
 
 const instance = axios.create({
-  baseURL: url.baseUrl,
+  baseURL: url.baseURL,
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",

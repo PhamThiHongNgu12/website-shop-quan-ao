@@ -4,9 +4,14 @@ import { hideLoading, showLoading } from "react-redux-loading-bar";
 
 const url = {
   baseUrl: "http://localhost/clotheshop/public/api",
-  members: "/members/login",
+
+  members: "members/login",
+  membersRegister: "/members/register",
   memberprofile: "/members/profile",
-  register: "/members/logins",
+  getCart: "/members/getCart",
+  addcart: "/members/addtocart",
+  deleteCart: "/members/deleteCart",
+  // register: "/members/logins",
 };
 
 const instance = axios.create({
@@ -19,9 +24,8 @@ const instance = axios.create({
 
 instance.interceptors.request.use((request) => {
   const state = store.getState(); //grab curent state
-
-  if (state.userauth.membertoken) {
-    request.headers.Authorization = `Bearer ${state.userauth.membertoken}`;
+  if (state.userauth.token) {
+    request.headers.Authorization = `Bearer ${state.userauth.token}`;
   }
   store.dispatch(showLoading());
   return request;

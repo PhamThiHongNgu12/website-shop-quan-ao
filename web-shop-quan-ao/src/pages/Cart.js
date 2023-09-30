@@ -1,22 +1,44 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Cart.css";
 import Header from "../containers/Header/Header";
 import { useCart } from "react-use-cart";
+import cartService from "../services/cartService";
+import memberService from "../services/memberService";
+import { toast } from "react-toastify";
 
 const Cart = (props) => {
-  const {
-    isEmty,
-    totalUniqueItems,
-    totalItems,
-    items,
-    cartTotal,
-    updateItemQuantity,
-    removeItem,
-    emptyCart,
-  } = useCart();
-  if (isEmty) {
-    return <h1 className="text-center">Your Cart is Empty</h1>;
-  }
+  const [carts, setCart] = useState([]);
+
+  const [member, setMember] = useState([]);
+  carts.map((x) => {
+    x.product.map((y) => {
+      console.log(y.ProductName);
+    });
+  });
+  console.log(member.id);
+  console.log("ll", carts.length - 1);
+  useEffect(() => {
+    load();
+  }, [member.id]);
+  const load = () => {
+    cartService.getCart(member.id).then((res) => setCart(res.data));
+  };
+  useEffect(() => {
+    loadUser();
+  }, []);
+  const loadUser = () => {
+    memberService.profile().then((res) => setMember(res.data));
+  };
+  const handleDelete = (id) => {
+    cartService.delete(id).then((res) => {
+      if (res.errorCode === 0) {
+        load();
+        toast.warn("Delete successful!!");
+      } else {
+        toast.error("Delete failed!!");
+      }
+    });
+  };
 
   return (
     <>
@@ -27,7 +49,7 @@ const Cart = (props) => {
           <div className="row d-flex justify-content-center align-items-center h-100">
             <div className="col">
               <div className="table-responsive">
-                <h5>Cart({totalUniqueItems})</h5>
+                <h5>Cart({carts.length})</h5>
                 <table className="table">
                   <thead>
                     <tr>
@@ -35,109 +57,74 @@ const Cart = (props) => {
                         Shopping Bag
                       </th>
                       <th scope="col">Size</th>
-                      <th scope="col">Quantity</th>
                       <th scope="col">Price</th>
+                      <th scope="col">Quantity</th>
+                      <th scope="col">TotalPrice</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {items.map((item, index) => (
-                      <tr key={index}>
-                        <th scope="row">
-                          <div className="d-flex align-items-center">
-                            <img
-                              // src="https://i.imgur.com/2DsA49b.webp"
-                              // className="img-fluid rounded-3"
-                              // style={{ width: "120px" }}
-                              // alt="Book"
-                              src={item.Image}
-                              alt=""
-                            />
-                            <div className="flex-column ms-4">
-                              <p className="mb-2">{item.ProductName}</p>
+                    {carts.map((item, index) =>
+                      item.product.map((product) => (
+                        <tr key={index}>
+                          <th scope="row">
+                            <div className="d-flex align-items-center">
+                              <img
+                                className="img-fluid rounded-3"
+                                style={{ width: "120px" }}
+                                src={`http://localhost/clotheshop/public/data/images/${product.Image}`}
+                                alt=""
+                              />
+                              <div className="flex-column ms-4">
+                                <p className="mb-2">{product.ProductName}</p>
+                              </div>
                             </div>
-                          </div>
-                        </th>
-                        <td className="align-middle">
-                          <p className="mb-0" style={{ fontWeight: 500 }}>
-                            {item.Size}
-                          </p>
-                        </td>
-                        <td className="align-middle">
-                          <div className="d-flex flex-row">
-                            <button className="btn btn-link px-2">
-                              <i className="fa fa-minus" />
+                          </th>
+                          <td className="align-middle">
+                            <p className="mb-0" style={{ fontWeight: 500 }}>
+                              {product.Size}
+                            </p>
+                          </td>
+                          <td className="align-middle">
+                            <p className="mb-0" style={{ fontWeight: 500 }}>
+                              {product.Price}
+                            </p>
+                          </td>
+                          <td className="align-middle">
+                            <div className="d-flex flex-row">
+                              <button className="btn btn-link px-2">
+                                <i className="fa fa-minus" />
+                              </button>
+                              <input
+                                id="form1"
+                                min={0}
+                                name="quantity"
+                                defaultValue={item.Product_qty}
+                                type="number"
+                                className="form-control form-control-sm"
+                                style={{ width: "50px" }}
+                              />
+                              <button className="btn btn-link px-2">
+                                <i className="fa fa-plus" />
+                              </button>
+                            </div>
+                          </td>
+                          <td className="align-middle">
+                            <p className="mb-0" style={{ fontWeight: 500 }}>
+                              {product.Price * item.Product_qty}
+                            </p>
+                          </td>
+                          <td className="align-middle">
+                            <button
+                              className="btn btn-sm btn-outline-secondary badge"
+                              type="button"
+                              onClick={(e) => handleDelete(item.id)}
+                            >
+                              <i className="fa fa-trash text-danger" />
                             </button>
-                            <input
-                              id="form1"
-                              min={0}
-                              name="quantity"
-                              defaultValue={item.quantity}
-                              type="number"
-                              className="form-control form-control-sm"
-                              style={{ width: "50px" }}
-                            />
-                            <button className="btn btn-link px-2">
-                              <i className="fa fa-plus" />
-                            </button>
-                          </div>
-                        </td>
-                        <td className="align-middle">
-                          <p className="mb-0" style={{ fontWeight: 500 }}>
-                            {item.price}
-                          </p>
-                        </td>
-                        <td className="align-middle">
-                          <i className="fa fa-trash text-danger" />
-                        </td>
-                      </tr>
-                    ))}
-                    <tr>
-                      <th scope="row" className="border-bottom-0">
-                        <div className="d-flex align-items-center">
-                          <img
-                            src="http://localhost/clotheshop/public/data/images/1_product_1_1683660016.png"
-                            className="img-fluid rounded-3"
-                            style={{ width: "120px" }}
-                            alt="Book"
-                          />
-                          <div className="flex-column ms-4">
-                            <p className="mb-2">Áo Hoodi America nỉ bông</p>
-                          </div>
-                        </div>
-                      </th>
-                      <td className="align-middle border-bottom-0">
-                        <p className="mb-0" style={{ fontWeight: 500 }}>
-                          M
-                        </p>
-                      </td>
-                      <td className="align-middle border-bottom-0">
-                        <div className="d-flex flex-row">
-                          <button className="btn btn-link px-2">
-                            <i className="fa fa-minus" />
-                          </button>
-                          <input
-                            id="form1"
-                            min={0}
-                            name="quantity"
-                            defaultValue={1}
-                            type="number"
-                            className="form-control form-control-sm"
-                            style={{ width: "50px" }}
-                          />
-                          <button className="btn btn-link px-2">
-                            <i className="fa fa-plus" />
-                          </button>
-                        </div>
-                      </td>
-                      <td className="align-middle border-bottom-0">
-                        <p className="mb-0" style={{ fontWeight: 500 }}>
-                          300000 VND
-                        </p>
-                      </td>
-                      <td className="align-middle">
-                        <i className="fa fa-trash text-danger" />
-                      </td>
-                    </tr>
+                          </td>
+                        </tr>
+                      ))
+                    )}
                   </tbody>
                 </table>
               </div>

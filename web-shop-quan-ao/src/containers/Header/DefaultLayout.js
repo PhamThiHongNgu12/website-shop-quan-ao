@@ -10,7 +10,7 @@ const DefaultLayout = () => {
   const isLoggedIns = useSelector((state) => state.userauth.isLoggedIns);
   return (
     <>
-      {!isLoggedIns ? (
+      {isLoggedIns == false ? (
         <Navigate to="/logins" />
       ) : (
         <>

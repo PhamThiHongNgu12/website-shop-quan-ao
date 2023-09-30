@@ -1,7 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/single_styles.css";
+import productService from "../services/productService";
 
 const ProductDetail = (props) => {
+  const [productDetail, setProductDetail] = useState([]);
+  const url = window.location.href;
+  const id = url.substring(url.lastIndexOf("/") + 1);
+  useEffect(() => {
+    loadData();
+  }, []);
+  const loadData = () => {
+    productService.get(id).then((res) => setProductDetail(res.data));
+  };
+  console.log(productDetail);
   return (
     <div>
       <div className="container single_product_container">
@@ -16,7 +27,7 @@ const ProductDetail = (props) => {
                 <li>
                   <a href="categories.html">
                     <i className="fa fa-angle-right" aria-hidden="true" />
-                    Men's
+                    {productDetail?.category?.CategoryName}
                   </a>
                 </li>
                 <li className="active">
@@ -29,30 +40,31 @@ const ProductDetail = (props) => {
             </div>
           </div>
         </div>
+        {/* {productDetail?.map((aProductDetail) => ( */}
         <div className="row">
           <div className="col-lg-7">
             <div className="single_product_pics">
               <div className="row">
                 <div className="col-lg-3 thumbnails_col order-lg-1 order-2">
-                  <div className="single_product_thumbnails">
+                  <div className="single_product_thumbnails ">
                     <ul>
                       <li>
                         <img
-                          src="images/single_1_thumb.jpg"
+                          src={productDetail?.Image}
                           alt=""
                           data-image="images/single_1.jpg"
                         />
                       </li>
                       <li className="active">
                         <img
-                          src="images/single_2_thumb.jpg"
+                          src={productDetail?.Image}
                           alt=""
                           data-image="images/single_2.jpg"
                         />
                       </li>
                       <li>
                         <img
-                          src="images/single_3_thumb.jpg"
+                          src={productDetail?.Image}
                           alt=""
                           data-image="images/single_3.jpg"
                         />
@@ -64,8 +76,14 @@ const ProductDetail = (props) => {
                   <div className="single_product_image">
                     <div
                       className="single_product_image_background"
-                      style={{ backgroundImage: "url(images/single_2.jpg)" }}
-                    />
+                      // style={{ backgroundImage: `${aProductDetail.Image}` }}
+                    >
+                      <img
+                        className="single_product_image_background"
+                        src={productDetail.Image}
+                        alt=""
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -74,20 +92,25 @@ const ProductDetail = (props) => {
           <div className="col-lg-5">
             <div className="product_details">
               <div className="product_details_title">
-                <h2>Pocket cotton sweatshirt</h2>
-                <p>
+                <h2>{productDetail.ProductName}</h2>
+                {/* <p>
                   Nam tempus turpis at metus scelerisque placerat nulla
                   deumantos solicitud felis. Pellentesque diam dolor, elementum
                   etos lobortis des mollis ut...
-                </p>
+                </p> */}
               </div>
               <div className="free_delivery d-flex flex-row align-items-center justify-content-center">
                 <span className="ti-truck" />
                 <span>free delivery</span>
               </div>
-              <div className="original_price">$629.99</div>
-              <div className="product_price">$495.00</div>
-              <ul className="star_rating">
+              {/* <h3>{productDetail.Size}</h3> */}
+              {/* <div className="original_price">{p}</div> */}
+
+              {/* <div className="product_price" style={{}}>
+                <p>Price:</p>
+                {productDetail.Price}
+              </div> */}
+              {/* <ul className="star_rating">
                 <li>
                   <i className="fa fa-star" aria-hidden="true" />
                 </li>
@@ -103,11 +126,30 @@ const ProductDetail = (props) => {
                 <li>
                   <i className="fa fa-star-o" aria-hidden="true" />
                 </li>
-              </ul>
+              </ul> */}
+              <div className="product_color">
+                <span>Size:</span>
+                <ul>
+                  <li style={{ marginRight: "100px" }}>
+                    <h3>{productDetail.Size}</h3>
+                  </li>
+                </ul>
+              </div>
+              <div className="product_color">
+                <span>Price:</span>
+                <ul>
+                  <li style={{ marginRight: "100px" }}>
+                    <h3>{productDetail.Price}</h3>
+                  </li>
+                </ul>
+              </div>
+
               <div className="product_color">
                 <span>Select Color:</span>
                 <ul>
-                  <li style={{ background: "#e54e5d" }} />
+                  <li style={{ marginRight: "100px" }}>
+                    {productDetail.Color}
+                  </li>
                   <li style={{ background: "#252525" }} />
                   <li style={{ background: "#60b3f3" }} />
                 </ul>
@@ -131,6 +173,7 @@ const ProductDetail = (props) => {
             </div>
           </div>
         </div>
+        {/* ))} */}
       </div>
       {/* Tabs */}
       <div className="tabs_section_container">

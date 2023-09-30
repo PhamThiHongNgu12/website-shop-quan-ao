@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import Register from "./containers/Auth/Login_Register";
 import Product from "./pages/Product";
 import Blog from "./containers/Auth/Blog";
+import ProductDetail from "./pages/ProductDetail";
 // import Product from "./pages/Product";
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Route path="/product" element={<Product />} />
         <Route path="/product/:cateid" element={<Product />} />
         <Route path="/blog" element={<Blog />} />
+        <Route path="/product-detail/:id" element={<ProductDetail />} />
 
         <Route path="/*" element={<DefaultLayout />} />
       </Routes>

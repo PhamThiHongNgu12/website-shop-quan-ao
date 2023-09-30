@@ -18,7 +18,7 @@ const routes = [
   { path: "product", component: <Product /> },
   { path: "product/:cateid", component: <Product /> },
   { path: "cart", component: <Cart /> },
-  { path: "/product-detail", component: <ProductDetail /> },
+  { path: "/product-detail/:id", component: <ProductDetail /> },
   { path: "/blog", component: <Blog /> },
 
   // error

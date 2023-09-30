@@ -1,27 +1,33 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { clear } from "@testing-library/user-event/dist/clear";
 
 export const userSlice = createSlice({
   name: "userauth",
   initialState: {
     isLoggedIns: false,
-    membertoken: null,
+    token: null,
     userInfo: {},
   },
   reducers: {
     login: (state, action) => {
       state.isLoggedIns = true;
-      state.membertoken = action.payload.membertoken;
+      state.token = action.payload.token;
+      state.userInfo = action.payload.userInfo;
+    },
+    profile: (state, action) => {
+      state.isLoggedIns = true;
+      state.headers.Authorization = `Bearer ${state.userauth.token}`;
       state.userInfo = action.payload.userInfo;
     },
     logout: (state) => {
-      state.isLoggedIns = false;
-      state.membertoken = null;
+      state.isLoggedIns = "";
+      state.token = null;
       state.userInfo = {};
     },
   },
 });
 
-export const { login, logout } = userSlice.actions;
+export const { login, logout, profile } = userSlice.actions;
 const userReducer = userSlice.reducer;
 
 export default userReducer;

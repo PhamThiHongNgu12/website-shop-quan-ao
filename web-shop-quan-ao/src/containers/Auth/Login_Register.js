@@ -34,16 +34,18 @@ const LoginUser = (props) => {
       phone: "",
     },
     validationSchema: Yup.object({
-      name: Yup.string("Name is required.")
-        .required()
-        .min(2, "At least 2 characters"),
+      name: Yup.string().required(),
+      email: Yup.string().required(),
+      username: Yup.string().required(),
+      password: Yup.string(),
+      phone: Yup.string(),
     }),
     onSubmit: (values) => {
-      handleFormSubmit(values);
+      handleFormRegisterSubmit(values);
     },
   });
 
-  const showModalHandler = (e, id) => {
+  const showModalRegisterHandler = (e, id) => {
     if (e) e.preventDefault();
     if (id > 0) {
       memberService.get(id).then((res) => {
@@ -56,7 +58,7 @@ const LoginUser = (props) => {
     }
   };
 
-  const handleFormSubmit = (data) => {
+  const handleFormRegisterSubmit = (data) => {
     memberService.register(data).then((res) => {
       if (res.errorCode === 0) {
         handleModalClose();
@@ -79,12 +81,13 @@ const LoginUser = (props) => {
     setIsWaiting(true);
     memberService.memberlogin(username, password).then((res) => {
       setIsWaiting(false);
+      console.log("ll", res);
       if (res.errorCode === 0) {
         setMessage("");
         console.log(usernameRef, passwordRef);
         dispatch(
           login({
-            membertoken: res.data.token,
+            token: res.data.token,
             userInfo: res.data,
           })
         );
@@ -175,7 +178,7 @@ const LoginUser = (props) => {
                           Don't have an account?{" "}
                           <Link
                             style={{ color: "#393f81" }}
-                            onClick={() => showModalHandler(null, 0)}
+                            onClick={() => showModalRegisterHandler(null, 0)}
                           >
                             Register here
                           </Link>
@@ -248,7 +251,11 @@ const LoginUser = (props) => {
           <Button variant="secondary" onClick={handleModalClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={formik.handleSubmit}>
+          <Button
+            variant="primary"
+            disabled={!formik.dirty || !formik.isValid}
+            onClick={formik.handleSubmit}
+          >
             Save
           </Button>
         </Modal.Footer>

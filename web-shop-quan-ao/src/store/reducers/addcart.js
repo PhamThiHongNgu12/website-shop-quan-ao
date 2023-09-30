@@ -4,7 +4,6 @@ import productService from "../../services/productService";
 export const cartSlice = createSlice({
   name: "cart",
   initialState: {
-    cart: [],
     items: [],
     totalQuantity: 0,
     totalPrice: 0,
