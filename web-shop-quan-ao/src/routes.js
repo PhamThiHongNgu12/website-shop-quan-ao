@@ -8,7 +8,7 @@ import Cart from "./pages/Cart";
 import AdminCategory from "./pages/AdminCategory";
 import AdminCRUDProduct from "./pages/AdminCRUDProduct";
 
-import Register from "./containers/Auth/Register";
+import Register from "./containers/Auth/Login_Register";
 import Blog from "./containers/Auth/Blog";
 
 const routes = [
@@ -18,7 +18,7 @@ const routes = [
   { path: "product", component: <Product /> },
   { path: "product/:cateid", component: <Product /> },
   { path: "cart", component: <Cart /> },
-  { path: "/product-detail", component: <ProductDetail /> },
+  { path: "/product-detail/:id", component: <ProductDetail /> },
   { path: "/blog", component: <Blog /> },
 
   // error

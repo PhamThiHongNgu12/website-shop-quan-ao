@@ -10,8 +10,8 @@ const DefaultLayout = () => {
   const isLoggedIns = useSelector((state) => state.userauth.isLoggedIns);
   return (
     <>
-      {!isLoggedIns ? (
-        <Navigate to="/register" />
+      {isLoggedIns == false ? (
+        <Navigate to="/logins" />
       ) : (
         <>
           <Header />

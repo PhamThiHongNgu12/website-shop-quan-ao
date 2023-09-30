@@ -820,7 +820,7 @@ section {
   display: inline-block;
   position: relative;
   min-width: 50px;
-  padding-left: 20px;
+
   text-align: center;
   vertical-align: middle;
   background: #1e1e27;
@@ -834,7 +834,6 @@ section {
   font-size: 13px;
 }
 .account > a > i {
-  margin-left: 8px;
 }
 .account:hover .account_selection {
   visibility: visible;

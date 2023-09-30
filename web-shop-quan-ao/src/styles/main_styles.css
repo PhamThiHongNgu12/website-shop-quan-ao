@@ -517,12 +517,14 @@ section {
   /* color: #b5aec4; */
 }
 .navbar_user {
-  margin-left: 37px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: baseline;
+  gap: 30px;
 }
 .navbar_user li {
   display: inline-block;
   text-align: center;
-  margin-left: 20px;
 }
 .navbar_user li a {
   display: -webkit-box;
@@ -742,7 +744,7 @@ section {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
-  margin-top: 150px;
+  margin-top: 180px;
 }
 .main_slider_content {
   width: 60%;

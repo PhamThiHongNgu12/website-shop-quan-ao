@@ -169,7 +169,7 @@ const Login = (props) => {
                           />
                         </div>
                         <p className="text-center text-danger">{message}</p>
-                        <div className="pt-1 mb-4">
+                        <div className="btn-login">
                           <CustomButton
                             className="btn btn-dark btn-lg btn-block"
                             type="submit"
